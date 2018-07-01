@@ -1,48 +1,93 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
 
-import { Layout, Menu, Breadcrumb, Icon, Avatar, Badge } from 'antd';
-const { Header, Sider, Content } = Layout;
+import styles from './header.scss';
+
+import { Layout, Menu, Breadcrumb, Icon, Avatar, Badge, Dropdown } from 'antd';
 const SubMenu = Menu.SubMenu;
 import { Row, Col } from 'antd';
 
-const HeaderApp = (props)=>(
-    <Header style={{ background: '#fff', padding: 0 }}>
-        <Row type="flex" justify="space-between">
-            <Col>
-                <Icon className="trigger" type={props.collapsed ? 'menu-unfold' : 'menu-fold'} onClick={props.onToggleSide}/>
-            </Col>
-            <Col>
-                {/* <Badge count={8} dot>
-                    <Icon type="bell" />
-                </Badge>
-                <Badge count={1} dot>
-                    <Icon type="wechat"/>
-                </Badge>
-                <Badge count={5} dot>
-                    <Icon type="global" />
-                </Badge> */}
-                <Menu mode="horizontal">
-                    <SubMenu key="sub1" title={<span><Icon type="book" /><span>Institucional</span></span>}>
-                        <Menu.Item key="3">Carreras</Menu.Item>
-                        <Menu.Item key="4">Semestres</Menu.Item>
-                        <Menu.Item key="5">Modulos</Menu.Item>
-                        <Menu.Item key="5">Alumnos</Menu.Item>
-                        <Menu.Item key="5">Profesores</Menu.Item>
-                    </SubMenu>
-                </Menu>
+import { Link } from 'react-router-dom';
 
-                {/* <Icon type="menu-unfold"/> */}
-            </Col>
-        </Row>
-        
 
-    </Header>
-);
+const menu = (
+    <Menu className="user-menu">
+        <Menu.Item key="1" >
+            <Icon type="user" />
+            <Link to="/perfil">Perfil</Link>
+        </Menu.Item>
+        <Menu.Item key="2">
+            <Icon type="setting" />
+            <Link to="/perfil/config">Configuracion</Link>
+        </Menu.Item>
+        <Menu.Divider/>
+        <Menu.Item key="3">
+            <Icon type="logout" />
+            <Link to="/logout">Cerrar Session</Link>
+        </Menu.Item>
+    </Menu>
+  );
+
+
+  const onClick = function ({ key }) {
+    message.info(`Click on item ${key}`);
+  };
+
+
+class HeaderApp extends Component{
+    constructor(props){
+        super(props);
+    }
+    render(){
+        const {
+            currentUser = {},
+            collapsed,
+            isMobile,
+            logo,
+            onToggleSide,
+        } = this.props;
+        return (
+            <header className={styles.header}>
+                { isMobile && [
+                    <Link to="/" className={styles.logo} key="logo">  
+                        <img src={logo} alt="logo" width="32" />
+                    </Link>,
+                    <Divider type="vertical" key="line" />,
+                ]}
+                <Row type="flex" justify="space-between">
+                    <Col>
+                        <Icon className="trigger trigger--toggle" type={collapsed ? 'menu-unfold' : 'menu-fold'} onClick={onToggleSide}/>
+                    </Col>
+                    <Col>
+                        <span className={styles.action}>
+                            <Badge count={15} dot>
+                                <Icon type="notification" />
+                            </Badge>
+                        </span>
+                        <span className={styles.action}>
+                            <Badge count={10} dot>
+                                <Icon type="bell" />
+                            </Badge>
+                        </span>
+                        <Dropdown overlay={menu}>
+                            <span className="ant-dropdown-link action">
+                                <Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf', margin: '0 8px 0 0' }}>U</Avatar>
+                                <span>User name</span>
+                            </span>
+                        </Dropdown>
+                    </Col>
+                </Row>
+            </header>
+        );
+    }
+}
 
 HeaderApp.prototype = {
     onToggleSide:  PropTypes.func.isRequired,
     collapsed: PropTypes.bool.isRequired,
+    currentUser: PropTypes.object,
+    isMobile: PropTypes.bool,
+    logo: PropTypes.string,
 }
 
 export default HeaderApp;

@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import PropTypes from 'prop-types';
 import { Link } from "react-router-dom";
 
+import styles from './index.scss';
+
 import { Layout, Menu,  Icon } from 'antd';
 const { Sider } = Layout;
 const SubMenu = Menu.SubMenu;
@@ -12,16 +14,23 @@ const SubMenu = Menu.SubMenu;
 //         onCollapse={onCollapse}
 //         width={256}
 //         className={styles.sider}
+
+
         
-const Aside = (props)=>(
+const Aside = ({collapsed, logo})=>(
     <Sider 
     trigger={null} 
     collapsible 
     breakpoint="lg"
-    collapsed={props.collapsed} 
+    collapsed={collapsed} 
     style={{ background: '#fff' }} 
     width={256}>
-        <div className="logo" />
+        <div className={styles.logo} key="logo">
+            <Link to="/">
+                <img src={logo} alt="logo" />
+                <h1>Facturacion</h1>
+            </Link>
+        </div>
         <Menu theme="light" defaultSelectedKeys={['1']} mode="vertical" style={{ height: '100%' }}>
             <Menu.Item key="1">
                 <Icon type="desktop" />

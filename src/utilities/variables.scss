@@ -1,0 +1,14 @@
+@import "config";
+:root{
+    --color: #{color(color)};
+    --inverse: #{color(inverse)};
+
+    --color-r: #{color(color,2)};
+    --inverse-r: #{color(inverse,2)};
+
+    --link    : #{color(link)};
+    --info    : #{color(info)};
+    --success : #{color(success)};
+    --warning : #{color(warning)};
+    --alert   : #{color(alert)};
+}

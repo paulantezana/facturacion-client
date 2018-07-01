@@ -24,15 +24,33 @@ module.exports = {
     module: {
         rules:[
             {
-                test: /\.config.scss$/,
+                test: /\.variables.scss$/,
                 loader: 'babel-loader!postcss-variables-loader'
             },
             {
-                test    : /\.(scss|css)/,
-                exclude: /\.config.scss$/,
+                test: /\.css$/,
+                use:  ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use : ['css-loader','postcss-loader']
+                })
+            },
+            {
+                test    : /\.(scss)/,
+                exclude: /\.variables.scss$/,
                 use     : ExtractTextPlugin.extract({
                     fallback: 'style-loader',
-                    use : ['css-loader','postcss-loader','sass-loader']
+                    use : [
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                modules: true,
+                                sourceMap: true,
+                                importLoaders: 2,
+                                localIdentName: '[local]__[hash:base64:5]'
+                            },
+                        },
+                        'sass-loader',
+                    ]
                 })
             },
 

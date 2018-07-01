@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 // Style sheets
 import 'antd/dist/antd.css';  // or 'antd/dist/antd.less'
 import './main.scss';
+import './utilities/variables.scss';
 
 import { ApolloClient } from 'apollo-client';
 import { createHttpLink } from 'apollo-link-http';
