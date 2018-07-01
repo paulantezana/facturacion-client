@@ -61,11 +61,16 @@ enquireScreen(b => {
 });
 
 
-const con1 = ()=> <h1>H1</h1>
-const con2 = ()=> <h1>H2</h1>
-const con3 = ()=> <h1>H3</h1>
-const con4 = ()=> <h1>H4</h1>
+//////////////////////////////////////////////////////////////////////////////////////////////////
+import Compra from '../routes/Compra';
+import Dashboard from '../routes/Dashboard';
+import Producto from '../routes/Producto';
+import Tercero from '../routes/Tercero';
+import Usuario from '../routes/Usuario';
+import Venta from '../routes/Venta';
 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 class App extends PureComponent{
     constructor(props){
@@ -137,11 +142,14 @@ class App extends PureComponent{
                         />
                     </Header>
 
-                    <Content style={{ margin: '0 16px' }}>
+                    <Content style={{ margin: '24px 24px 0', height: '100%' }}>
                         <Switch>
-                            <PrivateRoute path='/1' component={con1}/>
-                            <PrivateRoute path='/2' component={con2}/>
-                            <PrivateRoute path='/3' component={con3}/>
+                            <PrivateRoute exact path='/compra' component={Compra}/>
+                            <PrivateRoute exact path='/' component={Dashboard}/>
+                            <PrivateRoute exact path='/producto' component={Producto}/>
+                            <PrivateRoute exact path='/tercero' component={Tercero}/>
+                            <PrivateRoute exact path='/usuario' component={Usuario}/>
+                            <PrivateRoute exact path='/venta' component={Venta}/>
                         </Switch>
                     </Content>
 

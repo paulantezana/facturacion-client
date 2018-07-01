@@ -10,8 +10,8 @@ import {
 
 import { PrivateRoute } from './utils/auth';
 
-import UserLayout from "./layout/UserLayout";
-import AppLayout from "./layout/AppLayout";
+import UserLayout from "./layouts/UserLayout";
+import AppLayout from "./layouts/AppLayout";
 
 function RouterConfig() {
     return (
