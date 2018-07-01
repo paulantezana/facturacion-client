@@ -12,7 +12,7 @@ import { authenticate } from './../helpers/authenticate';
 // import Home from "./home"
 
 import Login from "./login";
-import App from "./../layout/app";
+import App from "./../layout/AppLayout";
 
 
 const Register = () => <h1>Register</h1>;

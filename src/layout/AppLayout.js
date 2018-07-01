@@ -5,8 +5,6 @@ const SubMenu = Menu.SubMenu;
 import { Row, Col } from 'antd';
 import { connect } from 'react-redux';
 
-import Aside from './partials/aside';
-
 
 import GlobalHeader from '../components/GlobalHeader';
 import SiderMenu from '../components/SiderMenu';
@@ -61,6 +59,7 @@ class App extends PureComponent{
             isMobile,
         };
         this.handleMenuCollapse = this.handleMenuCollapse.bind(this);
+        this.handleMenuClick = this.handleMenuClick.bind(this);
     }
 
     componentDidMount(){
@@ -79,6 +78,11 @@ class App extends PureComponent{
         this.setState({
             collapsed: !this.state.collapsed,
         });
+    }
+    handleMenuClick({key}){
+        if(key === 'logout'){
+            console.log("Hola mundo");
+        }
     }
 
     render(){
@@ -101,9 +105,8 @@ class App extends PureComponent{
                             currentUser={fakeUser}
                             collapsed={this.setState.collapsed}
                             isMobile={mb}
-                            // onNoticeClear={this.handleNoticeClear}
+                            onMenuClick={this.handleMenuClick}
                             onCollapse={this.handleMenuCollapse}
-                            // onNoticeVisibleChange={this.handleNoticeVisibleChange}
                         />
                     </Header>
 
