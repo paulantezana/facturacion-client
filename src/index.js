@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 // Style sheets
 import 'antd/dist/antd.css';  // or 'antd/dist/antd.less'
 import './main.scss';
-import './utilities/variables.scss';
+import './utils/variables.scss';
 
 import { ApolloClient } from 'apollo-client';
 import { createHttpLink } from 'apollo-link-http';
@@ -18,7 +18,7 @@ const client = new ApolloClient({
     cache: new InMemoryCache()
 });
 
-import App from './route/index';
+import App from './router';
 
 ReactDOM.render(
     <ApolloProvider client={client}>

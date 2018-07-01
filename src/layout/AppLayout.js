@@ -1,15 +1,25 @@
 import React, { PureComponent } from "react";
-import { Layout, Menu, Breadcrumb, Icon, Avatar, Badge } from 'antd';
-const { Header, Sider, Content } = Layout;
-const SubMenu = Menu.SubMenu;
-import { Row, Col } from 'antd';
-import { connect } from 'react-redux';
+import { Layout } from 'antd';
+const { Header, Content, Footer } = Layout;
+
+
+import {
+    BrowserRouter as Router,
+    Route,
+    Link,
+    Redirect,
+    Switch,
+    withRouter
+} from "react-router-dom";
 
 
 import GlobalHeader from '../components/GlobalHeader';
 import SiderMenu from '../components/SiderMenu';
+import GlobalFooter from '../components/GlobalFooter';
 
 import logo from '../assets/logo.png';
+import { PrivateRoute, Logout } from '../utils/auth';
+import menu from '../common/menu';
 
 const fakeUser = {
     username: 'paul',
@@ -51,6 +61,12 @@ enquireScreen(b => {
 });
 
 
+const con1 = ()=> <h1>H1</h1>
+const con2 = ()=> <h1>H2</h1>
+const con3 = ()=> <h1>H3</h1>
+const con4 = ()=> <h1>H4</h1>
+
+
 class App extends PureComponent{
     constructor(props){
         super(props);
@@ -60,6 +76,7 @@ class App extends PureComponent{
         };
         this.handleMenuCollapse = this.handleMenuCollapse.bind(this);
         this.handleMenuClick = this.handleMenuClick.bind(this);
+        this.handleSideMenuClick = this.handleSideMenuClick.bind(this);
     }
 
     componentDidMount(){
@@ -79,9 +96,18 @@ class App extends PureComponent{
             collapsed: !this.state.collapsed,
         });
     }
+
+    handleSideMenuClick({key}){
+        menu & menu.map(m=>{
+            if (m.id === key){
+                this.props.history.push(m.path);
+            }
+        });
+    }
+
     handleMenuClick({key}){
         if(key === 'logout'){
-            console.log("Hola mundo");
+            Logout();
         }
     }
 
@@ -91,8 +117,9 @@ class App extends PureComponent{
             <Layout>
                 <SiderMenu
                     logo={logo}
+                    onMenuClick={this.handleSideMenuClick}
                     // Authorized={Authorized}
-                    // menuData={getMenuData()}
+                    menuData={menu}
                     collapsed={this.state.collapsed}
                     // location={location}
                     isMobile={mb}
@@ -111,14 +138,37 @@ class App extends PureComponent{
                     </Header>
 
                     <Content style={{ margin: '0 16px' }}>
-                        <Breadcrumb style={{ margin: '16px 0' }}>
-                            <Breadcrumb.Item>User</Breadcrumb.Item>
-                            <Breadcrumb.Item>Bill</Breadcrumb.Item>
-                        </Breadcrumb>
-                        <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
-                            { this.props.children }
-                        </div>
+                        <Switch>
+                            <PrivateRoute path='/1' component={con1}/>
+                            <PrivateRoute path='/2' component={con2}/>
+                            <PrivateRoute path='/3' component={con3}/>
+                        </Switch>
                     </Content>
+
+                    <Footer style={{ padding: 0 }}>
+                        {/* <GlobalFooter
+                            links={[
+                                {
+                                    key: 'client',
+                                    title: [<Icon type="github" />,' Client'],
+                                    href: 'https://github.com/paulantezana/facturacion-client',
+                                    blankTarget: true,
+                                },
+                                {
+                                    key: 'server',
+                                    title: [<Icon type="github"/>,' Server'],
+                                    href: 'https://github.com/paulantezana/facturacion-go',
+                                    blankTarget: true,
+                                },
+                                {
+                                    key: 'author',
+                                    title: [<Icon type="user" />,' Paul Antezana'],
+                                    href: 'https://paulantezana.com',
+                                    blankTarget: true,
+                                },
+                            ]}
+                        /> */}
+                    </Footer>
                 </Layout>
                 
             </Layout>

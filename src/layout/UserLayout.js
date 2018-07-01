@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 import { message } from 'antd';
-import Logo from './../assets/logo.svg';
+// import Logo from './../assets/logo.svg';
 // import { login } from './../../helpers/authenticate.js';
 
 

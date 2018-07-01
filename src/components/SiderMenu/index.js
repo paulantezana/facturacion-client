@@ -1,26 +1,14 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from 'prop-types';
 import { Link } from "react-router-dom";
 
 import styles from './index.scss';
-import menuData from './menu';
 
 import { Layout, Menu,  Icon } from 'antd';
-import Item from "antd/lib/list/Item";
-import { map } from "async";
+
 const { Sider } = Layout;
-const SubMenu = Menu.SubMenu;
-
-// trigger={null}
-//         collapsible
-//         collapsed={collapsed}
-//         onCollapse={onCollapse}
-//         width={256}
-//         className={styles.sider}
-
-
         
-const Aside = ({collapsed, onCollapse, logo})=>(
+const Aside = ({collapsed, onCollapse, onMenuClick, menuData, logo})=>(
     <Sider 
         collapsible
         collapsed={collapsed}
@@ -34,12 +22,16 @@ const Aside = ({collapsed, onCollapse, logo})=>(
                 <h1>Facturacion</h1>
             </Link>
         </div>
-        <Menu theme="dark" defaultSelectedKeys={['0']} mode="inline" className={styles.menu}>
+        <Menu 
+            theme="dark" 
+            defaultSelectedKeys={['dashboard']} 
+            mode="inline"
+            onClick={onMenuClick}>
             {
-                menuData.map((menu,k)=>(
-                    <Menu.Item key={k}>
+                menuData && menuData.map(menu=>(
+                    <Menu.Item key={menu.id}>
                         <Icon type={menu.icon}/>
-                        <span><Link to={menu.path}>{ menu.name }</Link></span>
+                        <span>{ menu.name }</span>
                     </Menu.Item>
                 ))
             }
@@ -48,7 +40,10 @@ const Aside = ({collapsed, onCollapse, logo})=>(
 );
 
 Aside.prototype = {
-    collapsed: PropTypes.bool.isRequired
+    collapsed: PropTypes.bool,
+    onCollapse: PropTypes.func,
+    onMenuClick: PropTypes.func,
+    menuData: PropTypes.array,
 }
 
 export default Aside;
