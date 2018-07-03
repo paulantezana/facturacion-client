@@ -4,7 +4,10 @@ import {
     Redirect,
 } from "react-router-dom";
 
-const Authenticate = ()=> localStorage.getItem("lkti");
+
+import decoder from 'jwt-decode';
+
+const Authenticate = ()=> localStorage.getItem("lkti"); 
 
 const Logout = ()=>{
     localStorage.clear();
@@ -26,8 +29,15 @@ const PrivateRoute = ({ component: Component, rest }) => (
     />
 );
 
+const GetUser = ()=>{
+    if (!localStorage.getItem('lkti')) return;
+    let { usuario } = decoder(localStorage.getItem('lkti'));
+    return usuario;
+}
+
 export {
     Logout,
     PrivateRoute,
-    Authenticate
+    Authenticate,
+    GetUser
 };

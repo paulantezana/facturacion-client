@@ -18,14 +18,13 @@ import SiderMenu from '../components/SiderMenu';
 import GlobalFooter from '../components/GlobalFooter';
 
 import logo from '../assets/logo.png';
-import { PrivateRoute, Logout } from '../utils/auth';
+import { PrivateRoute, Logout, GetUser } from '../utils/auth';
 import menu from '../common/menu';
 
 const fakeUser = {
-    username: 'paul',
-    avatar: 'http://www.gravatar.com/avatar',
+    username: GetUser().nombre,
+    avatar: GetUser().avatar,
 }
-
 
 import { ContainerQuery }  from 'react-container-query';
 import classNames from 'classnames';
@@ -113,6 +112,7 @@ class App extends PureComponent{
     handleMenuClick({key}){
         if(key === 'logout'){
             Logout();
+            this.props.history.push('/');
         }
     }
 

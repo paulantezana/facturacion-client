@@ -1,106 +1,49 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
+import {  Link }  from 'react-router-dom';
 
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
-import { message } from 'antd';
-// import Logo from './../assets/logo.svg';
+import { Icon } from 'antd';
+
+import DocumentTitle from 'react-document-title';
+import styles from './UserLayout.scss';
+import logo from '../assets/logo.png';
+import GlobalFooter from '../components/GlobalFooter';
+import LoginForm from '../components/Login';
+
 // import { login } from './../../helpers/authenticate.js';
 
+const copyright = (
+    <Fragment>
+        Copyright <Icon type="copyright" /> 2018 paulantezana.com
+    </Fragment>
+);
 
-
-class LoginForm extends Component{
+class UserLayout extends Component{
     constructor(props){
         super(props);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    handleSubmit(e){
-        e.preventDefault();
-        this.props.form.validateFields((err, { usuario, clave }) => {
-            if (!err) {
-                fetch("http://localhost:7070/login",{
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    method: "POST",
-                    body: JSON.stringify({usuario,clave})
-                })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.type != undefined){
-                        if (data.type == "error") {
-                            message.error(data.message);
-                            return;
-                        }
-                    }
-                    
-                    if(data.token == undefined){
-                        message.error("Error Token de seguridad");
-                        return;
-                    }
-                    message.success("Bienvenido al sistema de facturacion");
-                    localStorage.setItem('lkti',data.token);
-                    this.props.history.push("/"); // Redireccionando
-                })
-                .catch(err => {
-                    message.error("Error fatal");
-                });
-            }
-        });
     }
 
     render() {
-        const { getFieldDecorator } = this.props.form;
         return (
-            <div className="basic-layout">
-                <div className="basic-layout__content container-small">
-                    <div className="basic-layout__content__header">
-                        {/* <img src={Logo} alt="" style="width: 6rem"/> */}
+            <DocumentTitle title="Login">
+                <div className={styles.container}>
+                    <div className={styles.content}>
+
+                        <div className={styles.top}>
+                            <div className={styles.header}>
+                                <Link to="/">
+                                <img alt="logo" className={styles.logo} src={logo} />
+                                <span className={styles.title}>Paul Antezana</span>
+                                </Link>
+                            </div>
+                            <div className={styles.desc}>Sistema de facturacion - Diseño Moderno</div>
+                        </div>
+                        <LoginForm {...this.props}/>
                     </div>
-                    <div className="basic-layout__content__main">
-                    <Form onSubmit={this.handleSubmit} className="login-form">
-                        <Form.Item>
-                            {
-                                getFieldDecorator('usuario', {
-                                    rules: [{ required: true, message: 'Por favor ingrese su nombre de usuario!' }],
-                                })(
-                                    <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Nombre de usuario" />
-                                )
-                            }
-                        </Form.Item>
-                        <Form.Item>
-                            {
-                                getFieldDecorator('clave', {
-                                    rules: [{ required: true, message: 'Por favor ingrese su contraseña!' }],
-                                })(
-                                    <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Contraseña"/>
-                                )
-                            }
-                        </Form.Item>
-                        <Form.Item>
-                            {
-                                getFieldDecorator('remember', {
-                                    valuePropName: 'checked',
-                                    initialValue: false,
-                                })(
-                                    <Checkbox>Recuérdame</Checkbox>
-                                )
-                            }
-                            <a className="login-form-forgot" href="">¿Olvidaste tu cuenta?</a>
-                            <Button type="primary" htmlType="submit" className="fluid">Log in</Button>
-                            O <a href="">¡Regístrate ahora!</a>
-                        </Form.Item>
-                    </Form>
-                    </div>
-                    <div className="basic-layout__content__footer">
-                        <p>Copyright © 2018 paulantezana.com</p>
-                    </div>
+                    <GlobalFooter copyright={copyright}/>
                 </div>
-            </div>
+            </DocumentTitle>
         );
     }
 }
- 
-const Login = Form.create()(LoginForm);
 
-export default Login;
+export default UserLayout;
