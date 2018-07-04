@@ -1,53 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {ApolloProvider} from 'react-apollo';
+import {Provider} from 'react-redux';
 
-// Style sheets
-import 'antd/dist/antd.css';  // or 'antd/dist/antd.less'
+// Assets
+import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 import './main.scss';
 import './utils/variables.scss';
 
-import { ApolloClient } from 'apollo-client';
-import { createHttpLink } from 'apollo-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { ApolloProvider } from 'react-apollo';
-import { setContext } from 'apollo-link-context';
+// Client graphql
+import client from './client';
 
-// const httpLink = createHttpLink({
-//     uri: 'http://localhost:7070/graphql',
-// });
-  
-// const authLink = setContext((_, { headers }) => {
-//     // get the authentication token from local storage if it exists
-//     const token = localStorage.getItem('lkti');
-//     // return the headers to the context so httpLink can read them
-//     return {
-//         headers: {
-//             headers,
-//             authorization: token ? `Bearer ${token}` : "",
-//         }
-//     }
-// });
+// Store redux
+import store from './store';
 
-// const client = new ApolloClient({
-//     link: authLink.concat(httpLink),
-//     cache: new InMemoryCache()
-// });
-
-
-
-
-const client = new ApolloClient({
-    link: new createHttpLink({
-        uri: 'http://localhost:7070/graphql'
-    }),
-    cache: new InMemoryCache()
-});
-
+// Router path
 import App from './router';
 
+// Render in dom html
 ReactDOM.render(
     <ApolloProvider client={client}>
+    <Provider store={store}>
         <App/>
-    </ApolloProvider>,
-    document.getElementById('root')
-);
+    </Provider>
+</ApolloProvider>, document.getElementById('root'));
