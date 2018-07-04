@@ -18,7 +18,7 @@ function RouterConfig() {
         <Router>
             <Switch>
                 <Route exact path="/login" component={UserLayout}/>
-                <PrivateRoute path="/" component={AppLayout} />
+                <PrivateRoute path="/" component={AppLayout}/>
             </Switch>
         </Router>
     );

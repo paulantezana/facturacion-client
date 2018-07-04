@@ -21,10 +21,12 @@ import logo from '../assets/logo.png';
 import { PrivateRoute, Logout, GetUser } from '../utils/auth';
 import menu from '../common/menu';
 
+console.log(GetUser());
 const fakeUser = {
-    username: GetUser().nombre,
-    avatar: GetUser().avatar,
+    username: 'GetUser().nombre',
+    avatar: 'GetUser().avatar',
 }
+
 
 import { ContainerQuery }  from 'react-container-query';
 import classNames from 'classnames';
